@@ -40,6 +40,3 @@ while op != 5:
         print("Opção inválida!\n")
 
 
-
-#@author Alexandre Dias
-

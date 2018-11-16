@@ -33,7 +33,7 @@ class TabelaHash:
             print("\nAluno de matrícula: %d não está cadastrado!\n" % matricula)
             return False
         else:
-            if not isinstance(self.__tabela_hash[hash], list):
+            if not self.__isLinked(self.__tabela_hash[hash]):
                 return self.__tabela_hash[hash]
             else:
                 for aluno in self.__tabela_hash[hash]:
@@ -54,12 +54,14 @@ class TabelaHash:
             print("Digete valores válidos")
         else:
             if op == 1:
-                del self.__tabela_hash[hash]
+                if self.__isLinked(self.__tabela_hash[hash]):
+                    self.__tabela_hash[hash].remove(aluno)
+                else:
+                    del self.__tabela_hash[hash]
                 self.__matriculas.remove(matricula)
                 print("\nAluno removido com sucesso!\n")
             if op == 2:
                 print("Aluno não removido.")
-            
 
     def cadastra_aluno(self):
         try:
@@ -83,7 +85,7 @@ class TabelaHash:
         if hash not in self.__tabela_hash.keys():
             self.__tabela_hash[hash] = aluno
         else:
-            if not isinstance(self.__tabela_hash[hash], list):
+            if not self.__isLinked(self.__tabela_hash[hash]):
                 lista = []
                 lista.append(self.__tabela_hash[hash])
                 lista.append(aluno)
@@ -98,5 +100,10 @@ class TabelaHash:
 
     def __calcula_hash(self, matricula):
         return matricula%11
+
+    def __isLinked(self, element):
+        if isinstance(element, list):
+            return True
+        return False
 
 
