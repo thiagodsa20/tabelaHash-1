@@ -1,0 +1,2 @@
+class JaExisteAlunoException(Exception):
+    pass
