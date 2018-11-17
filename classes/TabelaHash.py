@@ -7,6 +7,17 @@ class TabelaHash:
         self.__tabela_hash = {}
         self.__matriculas = []
 
+    def mostra_menu(self):
+        menu = '''
+         === Tabela Hash ===
+        1 - Inserir um aluno
+        2 - Buscar Alunos
+        3 - Remover Aluno
+        4 - Exibir tabela Hash
+        5 - Sair
+        '''
+        print(menu)
+
     def listar(self):
         if not self.__tabela_hash:
             print("\nTabela Hash vazia!\n")
@@ -33,16 +44,13 @@ class TabelaHash:
             print("\nAluno de matrícula: %d não está cadastrado!\n" % matricula)
             return False
         else:
-            if not self.__isLinked(self.__tabela_hash[hash]):
+            if not self.__isEncadeada(self.__tabela_hash[hash]):
+                self.__exibeAluno(self.__tabela_hash[hash])
                 return self.__tabela_hash[hash]
             else:
                 for aluno in self.__tabela_hash[hash]:
                     if aluno.matricula == matricula:
-                        print("====== Aluno encontrado: ========")
-                        print("Matrícula: %d" % aluno.matricula)
-                        print("Nome: %s" % aluno.nome)
-                        print("Idade: %d" % aluno.idade)
-                        print("==============")
+                        self.__exibeAluno(aluno)
                         return aluno
 
     def remove_aluno(self, matricula):
@@ -54,7 +62,7 @@ class TabelaHash:
             print("Digete valores válidos")
         else:
             if op == 1:
-                if self.__isLinked(self.__tabela_hash[hash]):
+                if self.__isEncadeada(self.__tabela_hash[hash]):
                     self.__tabela_hash[hash].remove(aluno)
                 else:
                     del self.__tabela_hash[hash]
@@ -85,7 +93,7 @@ class TabelaHash:
         if hash not in self.__tabela_hash.keys():
             self.__tabela_hash[hash] = aluno
         else:
-            if not self.__isLinked(self.__tabela_hash[hash]):
+            if not self.__isEncadeada(self.__tabela_hash[hash]):
                 lista = []
                 lista.append(self.__tabela_hash[hash])
                 lista.append(aluno)
@@ -101,9 +109,15 @@ class TabelaHash:
     def __calcula_hash(self, matricula):
         return matricula%11
 
-    def __isLinked(self, element):
+    def __isEncadeada(self, element):
         if isinstance(element, list):
             return True
         return False
+    def __exibeAluno(self, aluno):
+        print("====== Aluno encontrado: ========")
+        print("Matrícula: %d" % aluno.matricula)
+        print("Nome: %s" % aluno.nome)
+        print("Idade: %d" % aluno.idade)
+        print("==============")
 
 
